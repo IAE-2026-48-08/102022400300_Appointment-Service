@@ -1,0 +1,168 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "title": "Appointment Service API",
+        "description": "API documentation for Service Jadwal Dokter",
+        "version": "1.0.0"
+    },
+    "paths": {
+        "/v1/appointments": {
+            "get": {
+                "tags": [
+                    "Appointments"
+                ],
+                "summary": "Mengambil daftar seluruh jadwal konsultasi dokter",
+                "operationId": "db8217ceca86497df550bf61385ebbde",
+                "responses": {
+                    "200": {
+                        "description": "Data appointments retrieved successfully"
+                    },
+                    "401": {
+                        "description": "Unauthorized. Invalid or missing API Key."
+                    }
+                },
+                "security": [
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ],
+                "servers": [
+                    {
+                        "url": "http://127.0.0.1:8000/api",
+                        "description": "Local API Server"
+                    }
+                ]
+            },
+            "post": {
+                "tags": [
+                    "Appointments"
+                ],
+                "summary": "Membuat jadwal konsultasi dan booking pasien baru",
+                "operationId": "b8e887682cbdcef80841c5adfd93e791",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "patient_name",
+                                    "doctor_name",
+                                    "specialization",
+                                    "appointment_date",
+                                    "appointment_time"
+                                ],
+                                "properties": {
+                                    "patient_name": {
+                                        "type": "string",
+                                        "example": "Siti Aminah"
+                                    },
+                                    "doctor_name": {
+                                        "type": "string",
+                                        "example": "dr. Clara"
+                                    },
+                                    "specialization": {
+                                        "type": "string",
+                                        "example": "Dokter Umum"
+                                    },
+                                    "appointment_date": {
+                                        "type": "string",
+                                        "format": "date",
+                                        "example": "2026-06-11"
+                                    },
+                                    "appointment_time": {
+                                        "type": "string",
+                                        "example": "10:30"
+                                    },
+                                    "status": {
+                                        "type": "string",
+                                        "example": "scheduled"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Appointment created successfully"
+                    },
+                    "401": {
+                        "description": "Unauthorized. Invalid or missing API Key."
+                    },
+                    "422": {
+                        "description": "Validation error"
+                    }
+                },
+                "security": [
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ],
+                "servers": [
+                    {
+                        "url": "http://127.0.0.1:8000/api",
+                        "description": "Local API Server"
+                    }
+                ]
+            }
+        },
+        "/v1/appointments/{id}": {
+            "get": {
+                "tags": [
+                    "Appointments"
+                ],
+                "summary": "Mengambil detail jadwal konsultasi berdasarkan ID",
+                "operationId": "c88230d0b2216152643df4b287e15ad4",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID appointment",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Appointment detail retrieved successfully"
+                    },
+                    "404": {
+                        "description": "Appointment not found"
+                    },
+                    "401": {
+                        "description": "Unauthorized. Invalid or missing API Key."
+                    }
+                },
+                "security": [
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ],
+                "servers": [
+                    {
+                        "url": "http://127.0.0.1:8000/api",
+                        "description": "Local API Server"
+                    }
+                ]
+            }
+        }
+    },
+    "components": {
+        "securitySchemes": {
+            "ApiKeyAuth": {
+                "type": "apiKey",
+                "name": "X-IAE-KEY",
+                "in": "header"
+            }
+        }
+    },
+    "tags": [
+        {
+            "name": "Appointments",
+            "description": "Appointments"
+        }
+    ]
+}

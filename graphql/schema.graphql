@@ -1,0 +1,16 @@
+type Appointment {
+  id: ID!
+  patient_name: String!
+  doctor_name: String!
+  specialization: String!
+  appointment_date: String!
+  appointment_time: String!
+  status: String
+  created_at: DateTime
+  updated_at: DateTime
+}
+
+type Query {
+  appointments: [Appointment!]! @all(model: "App\\Models\\Appointment")
+  appointment(id: ID! @eq): Appointment @find(model: "App\\Models\\Appointment")
+}
