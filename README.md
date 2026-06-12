@@ -1,10 +1,9 @@
-# Appointment Service - IAE Tugas 2 & Tugas 3
+# Appointment Service
 
-Nama: Clara
+Nama: Faiza Clara Vimanda
 NIM: 102022400300
 Mata Kuliah: Integrasi Aplikasi Enterprise
 Service: Appointment Service
-Resource: appointments
 
 ## Deskripsi Service
 
