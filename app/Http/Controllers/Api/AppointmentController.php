@@ -4,6 +4,8 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Models\Appointment;
+use App\Services\SoapAuditService;
+use App\Services\RabbitMqPublisherService;
 use Illuminate\Http\Request;
 use OpenApi\Annotations as OA;
 
@@ -141,7 +143,11 @@ class AppointmentController extends Controller
      *     )
      * )
      */
-    public function store(Request $request)
+  public function store(
+    Request $request,
+    SoapAuditService $soapAuditService,
+    RabbitMqPublisherService $rabbitMqPublisherService
+)
     {
         $validated = $request->validate([
             'patient_name' => 'required|string|max:255',
@@ -154,10 +160,39 @@ class AppointmentController extends Controller
 
         $appointment = Appointment::create($validated);
 
+        $authHeader = $request->header('Authorization');
+        $token = str_replace('Bearer ', '', $authHeader);
+
+        $soapAudit = $soapAuditService->sendAppointmentAudit(
+            $appointment->toArray(),
+            $token
+        );
+
+        $appointment->update([
+            'soap_receipt_number' => $soapAudit['receipt_number'],
+            'soap_audit_response' => $soapAudit['body'],
+        ]);
+        $rabbitMq = $rabbitMqPublisherService->publishAppointmentCreated(
+        $appointment->fresh()->toArray(),
+            $token
+);
+
         return response()->json([
             'status' => 'success',
             'message' => 'Appointment created successfully',
-            'data' => $appointment,
+            'data' => $appointment->fresh(),
+'integration' => [
+    'soap_audit' => [
+        'success' => $soapAudit['success'],
+        'status_code' => $soapAudit['status_code'],
+        'receipt_number' => $soapAudit['receipt_number'],
+    ],
+    'rabbitmq_publish' => [
+        'success' => $rabbitMq['success'],
+        'status_code' => $rabbitMq['status_code'],
+        'response' => $rabbitMq['body'],
+    ]
+],
             'meta' => [
                 'service_name' => 'Appointment-Service',
                 'api_version' => 'v1'

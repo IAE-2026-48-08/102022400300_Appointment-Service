@@ -13,5 +13,7 @@ class Appointment extends Model
         'appointment_date',
         'appointment_time',
         'status',
+        'soap_receipt_number',
+        'soap_audit_response',
     ];
 }

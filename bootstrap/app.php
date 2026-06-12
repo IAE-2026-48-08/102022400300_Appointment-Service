@@ -11,12 +11,13 @@ return Application::configure(basePath: dirname(__DIR__))
         commands: __DIR__.'/../routes/console.php',
         health: '/up',
     )
-    ->withMiddleware(function (Middleware $middleware): void {
-        $middleware->alias([
-            'iae.key' => \App\Http\Middleware\CheckApiKey::class,
-        ]);
+->withMiddleware(function (Middleware $middleware): void {
+    $middleware->alias([
+        'iae.key' => \App\Http\Middleware\CheckApiKey::class,
+        'sso.jwt' => \App\Http\Middleware\VerifySsoJwt::class,
+    ]);
         //
-    })
+})
     ->withExceptions(function (Exceptions $exceptions): void {
         //
     })->create();
