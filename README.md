@@ -1,9 +1,9 @@
 # Appointment Service
 
-Nama: Faiza Clara Vimanda
-NIM: 102022400300
-Mata Kuliah: Integrasi Aplikasi Enterprise
-Service: Appointment Service
+Nama: Faiza Clara Vimanda <br>
+NIM: 102022400300 <br>
+Mata Kuliah: Integrasi Aplikasi Enterprise <br>
+Service: Appointment Service <br>
 
 ## Deskripsi Service
 
