@@ -1,0 +1,19 @@
+services:
+  appointment-service:
+    build:
+      context: .
+      dockerfile: Dockerfile
+
+    container_name: appointment-service-individu
+
+    ports:
+      - "8000:8000"
+
+    environment:
+      APP_ENV: local
+      APP_DEBUG: "true"
+      DB_CONNECTION: sqlite
+      DB_DATABASE: /var/www/html/database/database.sqlite
+      IAE_API_KEY: "102022400300"
+
+    restart: unless-stopped
