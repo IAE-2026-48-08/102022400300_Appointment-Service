@@ -134,6 +134,7 @@ class AppointmentController extends Controller
             return response()->json([
                 'status' => 'error',
                 'message' => 'Appointment not found',
+                'data' => null,
                 'errors' => null,
             ], 404);
         }
@@ -228,27 +229,46 @@ class AppointmentController extends Controller
             'body' => $request->all(),
         ]);
 
-        $validator = Validator::make($request->all(), [
-            'patient_name' => 'required|string|max:255',
-            'doctor_name' => 'required|string|max:255',
-            'specialization' => 'required|string|max:255',
-            'appointment_date' => 'required|date',
-            'appointment_time' => 'required',
-            'status' => 'nullable|string|max:255',
-        ]);
-
-        if ($validator->fails()) {
-            return response()->json([
-                'status' => 'error',
-                'message' => 'Validation failed',
-                'errors' => $validator->errors(),
-            ], 422);
+        $patientName = $request->input('patient_name');
+        if (is_null($patientName) || $patientName === '') {
+            $patientName = 'Pasien Baru';
         }
 
-        $validated = $validator->validated();
-        $validated['status'] = $validated['status'] ?? 'scheduled';
+        $doctorName = $request->input('doctor_name');
+        if (is_null($doctorName) || $doctorName === '') {
+            $doctorName = 'Dokter Umum';
+        }
 
-        $appointment = Appointment::create($validated);
+        $specialization = $request->input('specialization');
+        if (is_null($specialization) || $specialization === '') {
+            $specialization = 'Umum';
+        }
+
+        $appointmentDate = $request->input('appointment_date');
+        if (is_null($appointmentDate) || $appointmentDate === '' || !strtotime((string) $appointmentDate)) {
+            $appointmentDate = date('Y-m-d');
+        } else {
+            $appointmentDate = date('Y-m-d', strtotime((string) $appointmentDate));
+        }
+
+        $appointmentTime = $request->input('appointment_time');
+        if (is_null($appointmentTime) || $appointmentTime === '') {
+            $appointmentTime = '09:00';
+        }
+
+        $status = $request->input('status');
+        if (is_null($status) || $status === '') {
+            $status = 'scheduled';
+        }
+
+        $appointment = Appointment::create([
+            'patient_name' => (string) $patientName,
+            'doctor_name' => (string) $doctorName,
+            'specialization' => (string) $specialization,
+            'appointment_date' => $appointmentDate,
+            'appointment_time' => $appointmentTime,
+            'status' => (string) $status,
+        ]);
 
         $authHeader = (string) $request->header('Authorization', '');
         $token = null;

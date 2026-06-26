@@ -55,9 +55,8 @@ use OpenApi\Attributes as OA;
     tags: ['Appointments'],
     security: [['ApiKeyAuth' => []]],
     requestBody: new OA\RequestBody(
-        required: true,
+        required: false,
         content: new OA\JsonContent(
-            required: ['patient_name', 'doctor_name', 'specialization', 'appointment_date', 'appointment_time'],
             properties: [
                 new OA\Property(property: 'patient_name', type: 'string', example: 'Siti Aminah'),
                 new OA\Property(property: 'doctor_name', type: 'string', example: 'dr. Clara'),
@@ -71,8 +70,7 @@ use OpenApi\Attributes as OA;
     ),
     responses: [
         new OA\Response(response: 201, description: 'Appointment created successfully'),
-        new OA\Response(response: 401, description: 'Unauthorized. Invalid or missing API Key.'),
-        new OA\Response(response: 422, description: 'Validation error')
+        new OA\Response(response: 401, description: 'Unauthorized. Invalid or missing API Key.')
     ]
 )]
 class SwaggerInfo

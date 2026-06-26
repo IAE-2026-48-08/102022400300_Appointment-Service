@@ -1,6 +1,5 @@
 ﻿.git
 .github
-.env
 vendor
 node_modules
 storage/logs

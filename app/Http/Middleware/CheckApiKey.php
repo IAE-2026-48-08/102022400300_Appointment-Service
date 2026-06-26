@@ -16,7 +16,8 @@ class CheckApiKey
             return response()->json([
                 'status' => 'error',
                 'message' => 'Unauthorized. Invalid or missing API Key.',
-                'errors' => null
+                'data' => null,
+                'errors' => null,
             ], 401);
         }
 

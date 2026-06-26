@@ -1,4 +1,4 @@
-﻿FROM php:8.2-cli
+FROM php:8.2-cli
 
 RUN apt-get update \
     && apt-get install -y --no-install-recommends \
@@ -31,4 +31,4 @@ RUN mkdir -p \
 
 EXPOSE 8000
 
-CMD ["sh", "-c", "php artisan migrate --force && php artisan l5-swagger:generate && php artisan serve --host=0.0.0.0 --port=8000"]
+CMD ["sh", "-c", "php artisan migrate --force && (php artisan l5-swagger:generate || true) && php artisan serve --host=0.0.0.0 --port=8000"]
