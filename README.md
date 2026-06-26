@@ -7,7 +7,7 @@ Service: Appointment Service <br>
 
 ## Deskripsi Service
 
-Appointment Service adalah layanan berbasis Laravel yang digunakan untuk mengelola jadwal konsultasi antara pasien dan dokter. Service ini menyediakan fitur untuk melihat daftar appointment, melihat detail appointment, dan membuat appointment baru.
+Appointment Service adalah layanan berbasis Laravel yang digunakan untuk mengelola jadwal konsultasi antara pasien dan dokter. Service ini menyediakan fitur untuk melihat daftar appointment, melihat detail appointment, dan membuat appointment baru.a
 
 ## Endpoint Utama
 
