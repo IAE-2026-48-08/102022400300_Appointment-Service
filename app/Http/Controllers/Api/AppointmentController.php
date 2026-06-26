@@ -19,7 +19,7 @@ use Throwable;
  * )
  *
  * @OA\Server(
- *     url="http://localhost:8000/api",
+ *     url="http://localhost:8000",
  *     description="Local Docker API Server"
  * )
  *
@@ -34,7 +34,7 @@ class AppointmentController extends Controller
 {
     /**
      * @OA\Get(
-     *     path="/v1/appointments",
+     *     path="/api/v1/appointments",
      *     summary="Mengambil seluruh data appointment",
      *     tags={"Appointments"},
      *     security={{"ApiKeyAuth":{}}},
@@ -65,7 +65,7 @@ class AppointmentController extends Controller
     }
 
     #[\OpenApi\Attributes\Get(
-        path: '/v1/appointments/health',
+        path: '/api/v1/appointments/health',
         operationId: 'appointmentHealth',
         summary: 'Memeriksa status Appointment Service',
         tags: ['Appointments'],
@@ -99,7 +99,7 @@ class AppointmentController extends Controller
 
     /**
      * @OA\Get(
-     *     path="/v1/appointments/{id}",
+     *     path="/api/v1/appointments/{id}",
      *     summary="Mengambil detail appointment berdasarkan ID",
      *     tags={"Appointments"},
      *     security={{"ApiKeyAuth":{}}},
@@ -151,7 +151,7 @@ class AppointmentController extends Controller
 
     /**
      * @OA\Post(
-     *     path="/v1/appointments",
+     *     path="/api/v1/appointments",
      *     summary="Membuat appointment baru",
      *     tags={"Appointments"},
      *     security={{"ApiKeyAuth":{}}},
@@ -221,6 +221,13 @@ class AppointmentController extends Controller
         SoapAuditService $soapAuditService,
         RabbitMqPublisherService $rabbitMqPublisherService
     ) {
+        \Illuminate\Support\Facades\Log::info('POST Request received', [
+            'url' => $request->fullUrl(),
+            'method' => $request->method(),
+            'headers' => $request->headers->all(),
+            'body' => $request->all(),
+        ]);
+
         $validator = Validator::make($request->all(), [
             'patient_name' => 'required|string|max:255',
             'doctor_name' => 'required|string|max:255',

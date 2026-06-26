@@ -10,7 +10,7 @@ use OpenApi\Attributes as OA;
     description: 'API documentation for Service Jadwal Dokter'
 )]
 #[OA\Server(
-    url: 'http://127.0.0.1:8000/api',
+    url: 'http://127.0.0.1:8000',
     description: 'Local API Server'
 )]
 #[OA\SecurityScheme(
@@ -20,7 +20,7 @@ use OpenApi\Attributes as OA;
     name: 'X-IAE-KEY'
 )]
 #[OA\Get(
-    path: '/v1/appointments',
+    path: '/api/v1/appointments',
     summary: 'Mengambil daftar seluruh jadwal konsultasi dokter',
     tags: ['Appointments'],
     security: [['ApiKeyAuth' => []]],
@@ -30,7 +30,7 @@ use OpenApi\Attributes as OA;
     ]
 )]
 #[OA\Get(
-    path: '/v1/appointments/{id}',
+    path: '/api/v1/appointments/{id}',
     summary: 'Mengambil detail jadwal konsultasi berdasarkan ID',
     tags: ['Appointments'],
     security: [['ApiKeyAuth' => []]],
@@ -50,7 +50,7 @@ use OpenApi\Attributes as OA;
     ]
 )]
 #[OA\Post(
-    path: '/v1/appointments',
+    path: '/api/v1/appointments',
     summary: 'Membuat jadwal konsultasi dan booking pasien baru',
     tags: ['Appointments'],
     security: [['ApiKeyAuth' => []]],

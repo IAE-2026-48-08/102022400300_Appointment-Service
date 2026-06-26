@@ -6,13 +6,35 @@
         "version": "1.0.0"
     },
     "paths": {
-        "/v1/appointments": {
+        "/api/v1/appointments/health": {
+            "get": {
+                "tags": [
+                    "Appointments"
+                ],
+                "summary": "Memeriksa status Appointment Service",
+                "operationId": "appointmentHealth",
+                "responses": {
+                    "200": {
+                        "description": "Appointment Service is running"
+                    },
+                    "401": {
+                        "description": "Unauthorized. Invalid or missing API Key."
+                    }
+                },
+                "security": [
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/v1/appointments": {
             "get": {
                 "tags": [
                     "Appointments"
                 ],
                 "summary": "Mengambil daftar seluruh jadwal konsultasi dokter",
-                "operationId": "db8217ceca86497df550bf61385ebbde",
+                "operationId": "62132b054a54212b92de00c55279f352",
                 "responses": {
                     "200": {
                         "description": "Data appointments retrieved successfully"
@@ -28,7 +50,7 @@
                 ],
                 "servers": [
                     {
-                        "url": "http://127.0.0.1:8000/api",
+                        "url": "http://127.0.0.1:8000",
                         "description": "Local API Server"
                     }
                 ]
@@ -38,7 +60,7 @@
                     "Appointments"
                 ],
                 "summary": "Membuat jadwal konsultasi dan booking pasien baru",
-                "operationId": "b8e887682cbdcef80841c5adfd93e791",
+                "operationId": "542bdcdca4c0746fc71e97148e6d0a41",
                 "requestBody": {
                     "required": true,
                     "content": {
@@ -101,19 +123,19 @@
                 ],
                 "servers": [
                     {
-                        "url": "http://127.0.0.1:8000/api",
+                        "url": "http://127.0.0.1:8000",
                         "description": "Local API Server"
                     }
                 ]
             }
         },
-        "/v1/appointments/{id}": {
+        "/api/v1/appointments/{id}": {
             "get": {
                 "tags": [
                     "Appointments"
                 ],
                 "summary": "Mengambil detail jadwal konsultasi berdasarkan ID",
-                "operationId": "c88230d0b2216152643df4b287e15ad4",
+                "operationId": "72a7c7338c306640a10cf581d7bc6d0c",
                 "parameters": [
                     {
                         "name": "id",
@@ -143,7 +165,7 @@
                 ],
                 "servers": [
                     {
-                        "url": "http://127.0.0.1:8000/api",
+                        "url": "http://127.0.0.1:8000",
                         "description": "Local API Server"
                     }
                 ]
