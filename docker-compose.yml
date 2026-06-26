@@ -4,16 +4,25 @@ services:
       context: .
       dockerfile: Dockerfile
 
-    container_name: appointment-service-individu
-
     ports:
       - "8000:8000"
 
     environment:
+      APP_NAME: "Appointment Service"
       APP_ENV: local
+      APP_KEY: "base64:MTIzNDU2Nzg5MDEyMzQ1Njc4OTAxMjM0NTY3ODkwMTI="
       APP_DEBUG: "true"
+      APP_URL: "http://localhost:8000"
+
       DB_CONNECTION: sqlite
-      DB_DATABASE: /var/www/html/database/database.sqlite
+      DB_DATABASE: "/var/www/html/database/database.sqlite"
+
+      SESSION_DRIVER: file
+      CACHE_STORE: file
+      QUEUE_CONNECTION: sync
+
       IAE_API_KEY: "102022400300"
+      IAE_SOAP_AUDIT_URL: ""
+      IAE_RABBITMQ_PUBLISH_URL: ""
 
     restart: unless-stopped
